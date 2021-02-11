@@ -1,1 +1,123 @@
-
+# Concepts addressed: shell, directory, file permission, redirection, argument
+~/command-line-1-4-omardelgado21$ cp -u .html destination
+cp: cannot stat '.html': No such file or directory
+~/command-line-1-4-omardelgado21$ mkdir directory...
+~/command-line-1-4-omardelgado21$ mkdir dir1
+~/command-line-1-4-omardelgado21$ mkdir dir1 dir2 dir3
+mkdir: cannot create directory ‘dir1’: File exists
+~/command-line-1-4-omardelgado21$ cp item1 item2
+cp: cannot stat 'item1': No such file or directory
+~/command-line-1-4-omardelgado21$ cp item... directory
+cp: cannot stat 'item...': No such file or directory
+~/command-line-1-4-omardelgado21$ ls
+1-WhatIsTheShell.txt  3-ExploringTheSystemOutput.txt         dir1  dir3      README.md
+2-Navigation.txt      4-ManipulatingFilesAndDirectories.txt  dir2  directory...
+~/command-line-1-4-omardelgado21$ mv item1 item2
+mv: cannot stat 'item1': No such file or directory
+~/command-line-1-4-omardelgado21$ mv item... directory
+mv: cannot stat 'item...': No such file or directory
+~/command-line-1-4-omardelgado21$ rm item...
+rm: cannot remove 'item...': No such file or directory
+~/command-line-1-4-omardelgado21$ ln file link
+ln: failed to access 'file': No such file or directory
+~/command-line-1-4-omardelgado21$ ln -s item link
+~/command-line-1-4-omardelgado21$ cd
+~$ mkdir playground
+~$ cd playground
+~/playground$ mkdir dir1 dir2
+~/playground$ cp /etc/passwd
+cp: missing destination file operand after '/etc/passwd'
+Try 'cp --help' for more information.
+~/playground$ cp /etc/passwd .
+~/playground$ ls -l
+total 12
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:43 dir1
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:43 dir2
+-rw-r--r-- 1 runner runner 1065 Feb 11 20:45 passwd
+~/playground$ cp -v /etc/passwd .
+'/etc/passwd' -> './passwd'
+~/playground$ cp -i /etc/passwd .
+cp: overwrite './passwd'? mv passwd fun
+~/playground$ mv fun dir1
+mv: cannot stat 'fun': No such file or directory
+~/playground$ mv dir1/fun dir2
+mv: cannot stat 'dir1/fun': No such file or directory
+~/playground$ mv dir2/fun .
+mv: cannot stat 'dir2/fun': No such file or directory
+~/playground$ mv fun dir1
+mv: cannot stat 'fun': No such file or directory
+~/playground$ mv dir1 dir2
+~/playground$ ls -l dir2
+total 4
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:43 dir1
+~/playground$ ls -l dir2/dir1
+total 0
+~/playground$ mv dir2/dir1
+mv: missing destination file operand after 'dir2/dir1'
+Try 'mv --help' for more information.
+~/playground$ mv dir2/dir1 .
+~/playground$ mv dir1/fun .
+mv: cannot stat 'dir1/fun': No such file or directory
+~/playground$ ln fun fun-hard
+ln: failed to access 'fun': No such file or directory
+~/playground$ ln fun dir1/fun-hard
+ln: failed to access 'fun': No such file or directory
+~/playground$ ln fun dir2/fun-hard
+ln: failed to access 'fun': No such file or directory
+~/playground$ ls -l
+total 12
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:43 dir1
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:50 dir2
+-rw-r--r-- 1 runner runner 1065 Feb 11 20:45 passwd
+~/playground$ ls -li
+total 12
+984399 drwxr-xr-x 2 runner runner 4096 Feb 11 20:43 dir1
+984400 drwxr-xr-x 2 runner runner 4096 Feb 11 20:50 dir2
+792062 -rw-r--r-- 1 runner runner 1065 Feb 11 20:45 passwd
+~/playground$ ln -s fun fun-sym
+~/playground$ ln -s ../fun dir1/fun-sym
+~/playground$ ln -s ../fun dir2/fun-sym
+~/playground$ ls -1 dir1
+fun-sym
+~/playground$ ls -l dir1
+total 0
+lrwxrwxrwx 1 runner runner 6 Feb 11 20:54 fun-sym -> ../fun
+~/playground$ ln -s /home/me/playground/fun dir1/fun-sym
+ln: failed to create symbolic link 'dir1/fun-sym': File exists
+~/playground$ ln -s dir1 dir1-sym
+~/playground$ ls -l
+total 12
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:54 dir1
+lrwxrwxrwx 1 runner runner    4 Feb 11 20:56 dir1-sym -> dir1
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:54 dir2
+lrwxrwxrwx 1 runner runner    3 Feb 11 20:54 fun-sym -> fun
+-rw-r--r-- 1 runner runner 1065 Feb 11 20:45 passwd
+~/playground$ rm fun-hard
+rm: cannot remove 'fun-hard': No such file or directory
+~/playground$ ls -l
+total 12
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:54 dir1
+lrwxrwxrwx 1 runner runner    4 Feb 11 20:56 dir1-sym -> dir1
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:54 dir2
+lrwxrwxrwx 1 runner runner    3 Feb 11 20:54 fun-sym -> fun
+-rw-r--r-- 1 runner runner 1065 Feb 11 20:45 passwd
+~/playground$ rm -i fun
+rm: cannot remove 'fun': No such file or directory
+~/playground$ ls -l
+total 12
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:54 dir1
+lrwxrwxrwx 1 runner runner    4 Feb 11 20:56 dir1-sym -> dir1
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:54 dir2
+lrwxrwxrwx 1 runner runner    3 Feb 11 20:54 fun-sym -> fun
+-rw-r--r-- 1 runner runner 1065 Feb 11 20:45 passwd
+~/playground$ less fun-sym
+bash: less: command not found
+~/playground$ rm fun-sym dir1-sym
+~/playground$ ls -l
+total 12
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:54 dir1
+drwxr-xr-x 2 runner runner 4096 Feb 11 20:54 dir2
+-rw-r--r-- 1 runner runner 1065 Feb 11 20:45 passwd
+~/playground$ cd
+~$ rm -r playground
+~/command-line-1-4-omardelgado21$ 
